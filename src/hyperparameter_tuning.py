@@ -6,6 +6,23 @@ from sklearn.model_selection import ParameterGrid
 from models import SlowViT
 from dataset import ActionRecognitionDataset
 from load_models import load_models
+import configparser
+import wandb
+
+# Create a config parser
+config = configparser.ConfigParser()
+
+# Read the configuration file
+config.read('config.ini')
+
+# Get the API key
+api_key = config.get('WANDB', 'api_key')
+
+# Log in to W&B
+wandb.login(key=api_key)
+
+# Initialize W&B project
+wandb.init(project="my_project")
 
 # Define your tokenizer and num_epochs
 tokenizer = None  # TODO: Initialize your tokenizer
@@ -32,6 +49,9 @@ grid = ParameterGrid(param_grid)
 
 # For each combination of parameters
 for params in grid:
+    # Start a new run
+    run = wandb.init(project="my_project", config=params)
+
     # Update the model parameters
     optimizer = Adam(combined_model.parameters(), lr=params['learning_rate'])
     data_loader = DataLoader(your_dataset, batch_size=params['batch_size'], shuffle=True)
@@ -67,5 +87,8 @@ for params in grid:
     recall = recall_score(actual_labels, predictions, average='weighted')
     f1 = f1_score(actual_labels, predictions, average='weighted')
 
-    # Print the performance
-    print(f'Parameters: {params}, Accuracy: {accuracy}, Precision: {precision}, Recall: {recall}, F1 Score: {f1}')
+    # Log metrics to W&B
+    wandb.log({"accuracy": accuracy, "precision": precision, "recall": recall, "f1": f1})
+
+    # Finish the run
+    run.finish()
