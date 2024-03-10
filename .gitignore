@@ -1,0 +1,34 @@
+# .gitignore
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyd
+*.pyo
+*.pyz
+*.pyzw
+
+# Jupyter Notebook
+.ipynb_checkpoints/
+
+# Datasets
+*.csv
+*.tsv
+*.json
+
+# Model Checkpoints
+*.pth
+
+# Environment and Configuration
+.env
+.venv/
+*.yaml
+
+# IDEs
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+
+SlowFast/
