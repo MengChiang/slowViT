@@ -1,6 +1,9 @@
 # Use an official Python runtime as a parent image
 FROM python:3.10-slim-buster
 
+# Use an official PyTorch CUDA-enabled image as a parent image
+FROM pytorch/pytorch:1.10.0-cuda11.1-cudnn8-runtime
+
 # Set the working directory in the container to /app
 WORKDIR /app
 

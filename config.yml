@@ -1,0 +1,18 @@
+authorName: MorrisChiang
+experimentName: slowViT
+trialConcurrency: 1
+maxExecDuration: 1h
+maxTrialNum: 10
+searchSpacePath: search_space.json
+useAnnotation: false
+tuner:
+  builtinTunerName: TPE
+  classArgs:
+    optimize_mode: maximize
+trial:
+  command: python3 src/hyperparameter_nni_tuning.py
+  codeDir: .
+  gpuNum: 1
+trainingService:
+  platform: local
+  useActiveGpu: true
